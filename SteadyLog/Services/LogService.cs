@@ -41,6 +41,8 @@ namespace SteadyLog.Services
                 logViewModel.ActivityId = activity.Id;
                 logViewModel.ActivityTitle = activity.Title;
                 logViewModel.Amount = log.Amount;
+                logViewModel.CreatedOn = log.CreatedOn;
+                logViewModel.Comment = log.Comment;
 
                 logViewModels.Add(logViewModel);
             }
@@ -52,7 +54,14 @@ namespace SteadyLog.Services
         {
             var log = _context.Logs.Find(id.Value);
             var activity = _context.Activities.Find(log.ActivityId);
-            var logViewModel = new LogViewModel { Id = log.Id, ActivityId = activity.Id, ActivityTitle = activity.Title, Amount = log.Amount };
+            var logViewModel = new LogViewModel {
+                Id = log.Id,
+                ActivityId = activity.Id,
+                ActivityTitle = activity.Title,
+                Amount = log.Amount,
+                CreatedOn = log.CreatedOn,
+                Comment = log.Comment
+            };
             return logViewModel;
         }
 
@@ -61,6 +70,7 @@ namespace SteadyLog.Services
             var log = _context.Logs.Find(logSaveViewModel.Id);
             log.Amount = logSaveViewModel.Amount;
             log.ActivityId = logSaveViewModel.ActivityId;
+            log.Comment = logSaveViewModel.Comment;
 
             this._context.Update(log);
             this._context.SaveChanges();
@@ -72,6 +82,8 @@ namespace SteadyLog.Services
             
             log.ActivityId = logSaveViewModel.ActivityId;
             log.Amount = logSaveViewModel.Amount;
+            log.CreatedOn = DateTime.Now;
+            log.Comment = logSaveViewModel.Comment;
 
             this._context.Add(log);
             this._context.SaveChanges();
@@ -94,7 +106,9 @@ namespace SteadyLog.Services
                         "Id",
                         "Title"
                     ),
-                    Amount = vm.Amount
+                    Amount = vm.Amount,
+                    CreatedOn = vm.CreatedOn,
+                    Comment = vm.Comment
                 };
                 logSaveViewModels.Add(svm);
             }
@@ -115,7 +129,9 @@ namespace SteadyLog.Services
                     "Title"
                 ),
                 //_context.Activities.ToList(),
-                Amount = log.Amount
+                Amount = log.Amount,
+                CreatedOn = log.CreatedOn,
+                Comment = log.Comment
             };
             return logSaveViewModel;
         }

@@ -12,5 +12,8 @@ namespace SteadyLog.Models
         public int Id { get; set; }
         public int ActivityId { get; set; }
         public int Amount { get; set; }
+        public DateTime CreatedOn { get; set; }
+
+        public string Comment { get; set; }
     }
 }
